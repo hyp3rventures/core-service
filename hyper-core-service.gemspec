@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'hyper/authentication_service/version'
+require 'hyper/core/service/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'hyper-authentication_service'
-  spec.version       = Hyper::AuthenticationService::VERSION
-  spec.authors       = ['David Shaffer']
-  spec.email         = ['dave.shaffer@gmail.com', 'dave@hyp3r.co']
+  spec.name     = 'hyper-core-service'
+  spec.version  = Hyper::Core::Service::VERSION
+  spec.authors  = ['David Shaffer']
+  spec.email    = ['dave.shaffer@gmail.com', 'dave@hyp3r.co']
 
-  spec.summary       = %q{Authentication service for the Hyp3r core API}
-  spec.homepage      = 'https://github.com/hyp3rventures/authentication_service'
-  spec.licenses      = ['Nonstandard']
+  spec.summary  = %q{Core service for the Hyp3r core API}
+  spec.homepage = 'https://github.com/hyp3rventures/core/service'
+  spec.licenses = ['Nonstandard']
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
       'public gem pushes.'
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.require_paths = ['lib']
@@ -32,6 +32,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'pry', '~> 0.10'
   spec.add_development_dependency 'webmock', '~> 3.0'
+  spec.add_development_dependency 'dotenv', '~> 2'
 
-  spec.add_dependency 'faraday', '~> 0.13'
+  spec.add_dependency 'faraday', '~> 0.15'
+  spec.add_dependency 'activemodel', '>= 4.2.6'
+  spec.add_dependency 'activesupport', '>= 4.2.6'
 end

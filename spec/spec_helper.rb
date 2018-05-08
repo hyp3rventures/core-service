@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'hyper/core_service'
+require 'hyper/core/service'
 require 'webmock/rspec'
 require 'pry'
 

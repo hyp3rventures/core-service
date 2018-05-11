@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.10'
   spec.add_development_dependency 'webmock', '~> 3.0'
   spec.add_development_dependency 'dotenv', '~> 2'
+  spec.add_development_dependency 'factory_bot', '~> 4.0'
 
   spec.add_dependency 'faraday', '~> 0.15'
   spec.add_dependency 'activemodel', '>= 4.2.6'

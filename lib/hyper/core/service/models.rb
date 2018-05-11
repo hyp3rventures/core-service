@@ -1,4 +1,7 @@
-require_relative 'client/client'
 require_relative 'models/base'
 require_relative 'models/user'
 require_relative 'models/permissions'
+require_relative 'models/company'
+require_relative 'models/organization'
+require_relative 'models/venue'
+require_relative 'models/interaction'

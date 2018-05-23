@@ -2,8 +2,6 @@ module Hyper
   module Core
     module Service
       class User < Base
-        self.resource_url = 'users'
-
         PROPERTIES = [
           :authentication_token,
           :avatar,
@@ -39,7 +37,7 @@ module Hyper
           end
 
           def authenticate
-            build(user: request(:post, 'authentications', 'verify', scope_to_organization: false))
+            build(user: post('authentications', 'verify').result)
           end
         end
 

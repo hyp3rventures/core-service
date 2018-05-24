@@ -6,7 +6,8 @@ module Hyper
         extend Client
 
         class << self
-          attr_accessor :resource_url, :resource_scope
+          attr_writer :resource_url
+          attr_accessor :resource_scope
 
           def resource_url
             @resource_url ||= name.demodulize.underscore.pluralize
@@ -20,7 +21,7 @@ module Hyper
             if resource_scope
               raise MissingParamsError, resource_scope unless options.key?("#{resource_scope}_id".to_sym)
             end
-            build_collection(get(resource_url, **options).result)
+            build_collection(get(resource_url, options).result)
           end
 
           alias_method :all, :where

@@ -14,7 +14,7 @@ RSpec.describe Hyper::Core::Service::Configuration do
       :token,
       :token=,
       :version,
-      :version=,
+      :version=
     )
   end
 

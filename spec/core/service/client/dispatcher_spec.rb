@@ -2,7 +2,7 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
   let(:request_method) { :get }
   let(:status) { 200 }
   let(:body) { {} }
-  let(:response) { OpenStruct.new(body: body.to_json, status: status) }
+  let(:response) { double('Response', body: body.to_json, status: status) }
   let(:options) { {} }
   let(:endpoint) { 'foos' }
 

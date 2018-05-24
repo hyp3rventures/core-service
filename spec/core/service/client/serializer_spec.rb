@@ -26,7 +26,7 @@ RSpec.describe Hyper::Core::Service::Serializer do
       let(:object) { [{ 'foo' => 'bar' }, { 'baz' => 'quux' }] }
 
       it 'transforms each value to a HashWithIndifferentAccess' do
-        expect(subject.make_indifferent(object)).to all(satisfy { |o| o.kind_of?(ActiveSupport::HashWithIndifferentAccess) })
+        expect(subject.make_indifferent(object)).to all(satisfy { |o| o.is_a?(ActiveSupport::HashWithIndifferentAccess) })
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Hyper::Core::Service::Serializer do
 
   describe '#get_root_object' do
     context 'given a resource response' do
-      let(:object) { ActiveSupport::HashWithIndifferentAccess.new(foo: {yes: 'also yes'}) }
+      let(:object) { ActiveSupport::HashWithIndifferentAccess.new(foo: { yes: 'also yes' }) }
 
       it 'returns the actual root object' do
         expect(subject.get_root_object(object)).to eq(object['foo'])
@@ -49,7 +49,7 @@ RSpec.describe Hyper::Core::Service::Serializer do
     end
 
     context 'given a collection response with a "meta" key' do
-      let(:object) { ActiveSupport::HashWithIndifferentAccess.new(meta: 'yes', foos: {yes: 'also yes'}) }
+      let(:object) { ActiveSupport::HashWithIndifferentAccess.new(meta: 'yes', foos: { yes: 'also yes' }) }
 
       it 'returns that hash without the "meta" key' do
         expect(subject.get_root_object(object)).to eq(object['foos'])

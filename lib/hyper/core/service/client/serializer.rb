@@ -2,11 +2,11 @@ module Hyper
   module Core
     module Service
       class Serializer
-        attr_reader :blob, :endpoint
+        attr_reader :blob, :key
 
-        def initialize(blob, endpoint)
+        def initialize(blob, key)
           @blob = blob
-          @endpoint = endpoint
+          @key = key
         end
 
         def run
@@ -30,10 +30,10 @@ module Hyper
         def get_root_object(object)
           object = object.except(:meta)
           if object.keys.length == 1
-            if object.key?(endpoint)
-              object.fetch(endpoint)
-            elsif object.key?(endpoint.singularize)
-              object.fetch(endpoint.singularize)
+            if object.key?(key)
+              object.fetch(key)
+            elsif object.key?(key.singularize)
+              object.fetch(key.singularize)
             end
           else
             object

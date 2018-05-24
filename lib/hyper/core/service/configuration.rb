@@ -7,7 +7,8 @@ module Hyper
         API_VERSION = 3
         PRODUCT = 'engage'
 
-        attr_accessor :host, :prefix, :version, :email, :token, :organization_id, :product
+        attr_writer :host, :prefix, :version, :product
+        attr_accessor :email, :token, :organization_id
 
         def host
           @host ||= HOST_URL

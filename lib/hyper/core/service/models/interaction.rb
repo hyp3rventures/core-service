@@ -28,7 +28,7 @@ module Hyper
           :retweet_count,
           :ugc_permission_state,
           :updated_at,
-          :venue_id,
+          :venue_id
         ]
 
         attr_accessor *PROPERTIES

@@ -3,7 +3,7 @@ RSpec.describe Hyper::Core::Service::Base do
     subject { TestObject } # spec/support/test_object.rb
 
     describe '.where' do
-      let(:response) { OpenStruct.new(body: body.to_json, status: 200) }
+      let(:response) { double('Response', body: body.to_json, status: 200) }
 
       before do
         allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)
@@ -27,7 +27,7 @@ RSpec.describe Hyper::Core::Service::Base do
     end
 
     describe '.find' do
-      let(:response) { OpenStruct.new(body: body.to_json, status: 200) }
+      let(:response) { double('Response', body: body.to_json, status: 200) }
 
       before do
         allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)

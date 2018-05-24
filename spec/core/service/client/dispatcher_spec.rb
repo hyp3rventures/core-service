@@ -1,10 +1,12 @@
 RSpec.describe Hyper::Core::Service::Dispatcher do
   let(:request_method) { :get }
   let(:status) { 200 }
-  let(:response) { OpenStruct.new(body: '{}', status: status) }
+  let(:body) { {} }
+  let(:response) { OpenStruct.new(body: body.to_json, status: status) }
+  let(:options) { {} }
   let(:endpoint) { 'foos' }
 
-  subject { described_class.new(request_method, endpoint) }
+  subject { described_class.new(request_method, endpoint, options) }
 
   before do
     allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)
@@ -47,10 +49,37 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
     end
 
     context 'given an options hash' do
-      subject { described_class.new(request_method, endpoint, fromp: 'yz', jonk: 'gom') }
+      let(:options) { { fromp: 'yz', jonk: 'gom' } }
       it 'returns that hash with organization_id added' do
         result = { organization_id: 3, fromp: 'yz', jonk: 'gom' }
         expect(subject.params).to eq(result)
+      end
+    end
+  end
+
+  describe '#object_key' do
+    let(:body) do
+      {
+        'nerps' => {
+          'foo' => 1,
+          'bar' => 2
+        }
+      }
+    end
+
+    context 'given an options hash with an object_key key set' do
+      let(:options) { { object_key: 'nerps' } }
+
+      it 'sets the value from the object_key key and passes it to the serializer' do
+        subject.call
+        expect(subject.object_key).to eq('nerps')
+        expect(subject.result).to eq(body[subject.object_key])
+      end
+    end
+
+    context 'given no object_key key set' do
+      it 'sets the value to the endpoint' do
+        expect(subject.object_key).to eq('foos')
       end
     end
   end

@@ -3,18 +3,20 @@ module Hyper
     module Service
       class Dispatcher
         attr_reader :request_method, :endpoint, :arguments, :options, :result, :connection
+        attr_accessor :object_key
 
         def initialize(request_method, endpoint, *arguments, **options)
           @request_method = request_method
           @endpoint = endpoint
           @arguments = arguments
           @options = options
+          @object_key ||= options.key?(:object_key) ? options.delete(:object_key) : endpoint
           @connection = Hyper::Core::Service.connection
         end
 
         def call
           handle_errors(response)
-          @result = Serializer.new(response.body, endpoint).run
+          @result = Serializer.new(response.body, object_key).run
           self
         end
 

@@ -28,7 +28,7 @@ module Hyper
         end
 
         def url
-          [endpoint, *arguments.map(&:to_s)].compact.join('/')
+          [endpoint, *arguments.compact].flat_map(&:to_s).join('/')
         end
 
         def params

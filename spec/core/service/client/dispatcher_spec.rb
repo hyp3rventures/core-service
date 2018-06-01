@@ -9,7 +9,7 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
   subject { described_class.new(request_method, endpoint, options) }
 
   before do
-    allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)
+    allow(subject.connection).to receive(:get).and_return(response)
   end
 
   describe '#call' do

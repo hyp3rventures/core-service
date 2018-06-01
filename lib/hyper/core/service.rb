@@ -24,7 +24,7 @@ module Hyper
         end
 
         def connection
-          @connection ||= Faraday.new(url: configuration.base_url) do |faraday|
+          Faraday.new(url: configuration.base_url) do |faraday|
             faraday.request :url_encoded # form-encode POST params
             faraday.headers['X-Entity-Email'] = configuration.email
             faraday.headers['X-Entity-Token'] = configuration.token

@@ -3,11 +3,7 @@ RSpec.describe Hyper::Core::Service::Base do
     subject { TestObject } # spec/support/test_object.rb
 
     describe '.where' do
-      let(:response) { double('Response', body: body.to_json, status: 200) }
-
-      before do
-        allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)
-      end
+      before { stub_request(:any, /example/).to_return(body: body.to_json, status: 200) }
 
       context 'given a collection response' do
         let(:body) { { 'test_objects' => attributes_for_list(:test_object, 2, grable_id: 1) } }
@@ -27,11 +23,7 @@ RSpec.describe Hyper::Core::Service::Base do
     end
 
     describe '.find' do
-      let(:response) { double('Response', body: body.to_json, status: 200) }
-
-      before do
-        allow(Hyper::Core::Service.connection).to receive(:get).and_return(response)
-      end
+      before { stub_request(:any, /example/).to_return(body: body.to_json, status: 200) }
 
       context 'given a resource response' do
         let(:body) { attributes_for(:test_object, grable_id: 1) }

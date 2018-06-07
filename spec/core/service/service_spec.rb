@@ -18,8 +18,28 @@ RSpec.describe Hyper::Core::Service do
   end
 
   describe '#connection' do
-    it 'returns a Faraday connection object' do
-      expect(subject.connection).to be_a(Faraday::Connection)
+    context 'given no block' do
+      it 'returns a Faraday connection object set to the configuration values' do
+        result = subject.connection
+        expect(result).to be_a(Faraday::Connection)
+        expect(result.headers).to include('X-Entity-Email' => 'user@example.com') # from spec_helper.rb
+      end
+    end
+
+    context 'given a block' do
+      let(:block) do
+        Proc.new do |f|
+          f.headers['yes'] = 'no'
+          f.adapter :net_http_persistent
+        end
+      end
+
+      it 'returns a Faraday connection object set to the block values' do
+        result = subject.connection(&block)
+        expect(result).to be_a(Faraday::Connection)
+        expect(result.headers).to include('yes' => 'no')
+        expect(result.builder.handlers).to include(Faraday::Adapter::NetHttpPersistent)
+      end
     end
   end
 end

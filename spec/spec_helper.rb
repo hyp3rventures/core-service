@@ -29,7 +29,5 @@ RSpec.configure do |config|
       hyper_config.organization_id = 3
       hyper_config.host = 'www.example.com'
     end
-
-    WebMock.stub_request(:any, /.*/) # probably bad
   end
 end

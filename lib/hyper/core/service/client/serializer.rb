@@ -10,9 +10,9 @@ module Hyper
         end
 
         def run
-          obj = parsed(blob)
-          obj = make_indifferent(obj)
-          get_root_object(obj)
+          object = parsed(blob)
+          object = make_indifferent(object)
+          get_root(object)
         end
 
         def parsed(object)
@@ -27,7 +27,15 @@ module Hyper
           end
         end
 
-        def get_root_object(object)
+        def get_root(object)
+          if object.is_a?(Array)
+            object.map { |obj| root_object(obj) }
+          else
+            root_object(object)
+          end
+        end
+
+        def root_object(object)
           object = object.except(:meta)
           if object.keys.length == 1
             if object.key?(key)

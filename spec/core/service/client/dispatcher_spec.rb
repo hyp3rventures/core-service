@@ -20,8 +20,28 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
   end
 
   describe '#response' do
+    before do
+      allow(subject.connection).to receive(:get).and_call_original
+      stub_request(:get, 'https://www.example.com/api/v3/foos?organization_id=3').to_return(status: 200)
+    end
+
     it 'returns a response object' do
-      expect(subject.response).to eq(response)
+      expect(subject.response).to be_a(Faraday::Response)
+    end
+
+    context 'GET request' do
+      it 'appends params to URI' do
+        expect(subject.response.env.url.request_uri).to eq('/api/v3/foos?organization_id=3')
+      end
+    end
+
+    context 'POST request' do
+      let(:request_method) { :post }
+
+      it 'does not append params to URI' do
+        stub_request(:post, "https://www.example.com/api/v3/foos").to_return(status: 200)
+        expect(subject.response.env.url.request_uri).to eq('/api/v3/foos')
+      end
     end
   end
 

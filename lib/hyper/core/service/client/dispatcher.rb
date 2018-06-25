@@ -6,7 +6,7 @@ module Hyper
         attr_accessor :object_key
 
         def initialize(request_method, endpoint, *arguments, **options)
-          @request_method = request_method
+          @request_method = request_method.to_sym
           @endpoint = endpoint
           @arguments = arguments
           @options = options
@@ -21,9 +21,10 @@ module Hyper
         end
 
         def response
-          @response ||= connection.send(request_method.to_sym) do |request|
+          @response ||= connection.send(request_method) do |request|
             request.url url
-            request.params.merge!(params)
+            request.params.merge!(params) if request_method == :get
+            request.body = params.to_json if request_method == :post
           end
         end
 

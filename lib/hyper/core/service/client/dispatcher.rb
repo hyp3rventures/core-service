@@ -11,7 +11,7 @@ module Hyper
           @arguments = arguments
           @options = options
           @object_key ||= options.key?(:object_key) ? options.delete(:object_key) : endpoint
-          @connection = Hyper::Core::Service.connection
+          @connection = Hyper::Core::Service.connection(versioned_base_url)
         end
 
         def call
@@ -51,6 +51,10 @@ module Hyper
           when (500..599)
             raise InternalServerError, response.body
           end
+        end
+
+        def versioned_base_url
+          !endpoint.include?(Hyper::Core::Service::Configuration::NON_VERSIONED_API_PATH)
         end
       end
     end

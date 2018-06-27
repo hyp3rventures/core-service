@@ -23,7 +23,7 @@ module Hyper
           yield(configuration)
         end
 
-        def connection(&blk)
+        def connection(versioned_base_url = true, &blk)
           block = blk || Proc.new do |faraday|
             faraday.request :url_encoded # form-encode POST params
             faraday.headers['X-Entity-Email'] = configuration.email
@@ -32,7 +32,7 @@ module Hyper
             faraday.headers['Content-Type'] = 'application/json'
             faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
           end
-          Faraday.new(url: configuration.base_url, &block)
+          Faraday.new(url: configuration.base_url(versioned_base_url), &block)
         end
       end
     end

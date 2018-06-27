@@ -19,6 +19,23 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
     end
   end
 
+  describe '#connection' do
+    context 'when endpoint includes non-versioned path' do
+      let(:non_versioned_path) { Hyper::Core::Service::Configuration::NON_VERSIONED_API_PATH }
+      let(:endpoint) { "#{non_versioned_path}/foos"}
+
+      it 'does not include version in the connection url' do
+        expect(subject.connection.path_prefix).to eq('/api')
+      end
+    end
+
+    context 'when endpoint does not include a non-versioned path' do
+      it 'includes version in the connection url' do
+        expect(subject.connection.path_prefix).to eq('/api/v3')
+      end
+    end
+  end
+
   describe '#response' do
     before do
       allow(subject.connection).to receive(:get).and_call_original

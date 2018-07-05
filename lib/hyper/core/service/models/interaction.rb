@@ -23,6 +23,7 @@ module Hyper
           :network,
           :network_id,
           :nuid,
+          :posted_at,
           :replies_count,
           :reposted,
           :retweet_count,

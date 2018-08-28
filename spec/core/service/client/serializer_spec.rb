@@ -49,7 +49,7 @@ RSpec.describe Hyper::Core::Service::Serializer do
     end
 
     context 'given a collection resource response' do
-      let(:collection) { [{id: 1, baw: 'wit'}, {id: 2, da: 'bah'}, {id: 3, da: 'bang'}, {id: 4, da: 'bang'}, {id: 5, diggy: 'diggy'}] }
+      let(:collection) { [{ id: 1, baw: 'wit' }, { id: 2, da: 'bah' }, { id: 3, da: 'bang' }, { id: 4, da: 'bang' }, { id: 5, diggy: 'diggy' }] }
       let(:object) { collection.map { |item| ActiveSupport::HashWithIndifferentAccess.new(item) } }
 
       it 'returns an array of objects' do

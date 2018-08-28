@@ -22,7 +22,7 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
   describe '#connection' do
     context 'when endpoint includes non-versioned path' do
       let(:non_versioned_path) { Hyper::Core::Service::Configuration::NON_VERSIONED_API_PATH }
-      let(:endpoint) { "#{non_versioned_path}/foos"}
+      let(:endpoint) { "#{non_versioned_path}/foos" }
 
       it 'does not include version in the connection url' do
         expect(subject.connection.path_prefix).to eq('/api')
@@ -56,7 +56,7 @@ RSpec.describe Hyper::Core::Service::Dispatcher do
       let(:request_method) { :post }
 
       it 'does not append params to URI' do
-        stub_request(:post, "https://www.example.com/api/v3/foos").to_return(status: 200)
+        stub_request(:post, 'https://www.example.com/api/v3/foos').to_return(status: 200)
         expect(subject.response.env.url.request_uri).to eq('/api/v3/foos')
       end
     end

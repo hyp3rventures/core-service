@@ -7,9 +7,14 @@ module Hyper
         API_VERSION = 3
         PRODUCT = 'engage'
         NON_VERSIONED_API_PATH = 'visualize'
+        DEFAULT_PROTOCOL = 'https'
 
-        attr_writer :host, :prefix, :version, :product
+        attr_writer :host, :prefix, :version, :product, :protocol
         attr_accessor :email, :token, :organization_id
+
+        def protocol
+          @protocol ||= DEFAULT_PROTOCOL
+        end
 
         def host
           @host ||= HOST_URL
@@ -34,15 +39,11 @@ module Hyper
         private
 
         def base_url_with_version
-          "#{protocol}#{host}/#{prefix}/#{version_string}"
+          "#{protocol}://#{host}/#{prefix}/#{version_string}"
         end
 
         def base_url_without_version
-          "#{protocol}#{host}/#{prefix}"
-        end
-
-        def protocol
-          'https://'
+          "#{protocol}://#{host}/#{prefix}"
         end
 
         def version_string

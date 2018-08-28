@@ -28,7 +28,7 @@ RSpec.describe Hyper::Core::Service do
 
     context 'given a block' do
       let(:block) do
-        Proc.new do |f|
+        proc do |f|
           f.headers['yes'] = 'no'
           f.adapter :net_http_persistent
         end
